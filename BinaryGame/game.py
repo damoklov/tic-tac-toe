@@ -45,6 +45,11 @@ class Game:
         else:
             self.board = board2
 
+    @staticmethod
+    def get_winner(code):
+        decoder = {1: 'AI won!', -1: 'User won!', 0: 'Draw.'}
+        return decoder[code]
+
     def launch(self):
         while not self.board.has_winner():
             pl = input('Enter move: ')
@@ -54,6 +59,7 @@ class Game:
                 print(self.board)
             else:
                 print('Reenter correctly, please!')
+        print(self.get_winner(self.board.has_winner()))
 
 
 if __name__ == '__main__':
