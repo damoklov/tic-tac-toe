@@ -4,6 +4,11 @@ from copy import deepcopy
 
 
 def generate_winning_combinations():
+    """
+    Generates all possible winning combinations
+
+    :return: list
+    """
     combinations = []
     for i in range(3):
         combination1 = []
@@ -20,6 +25,7 @@ def generate_winning_combinations():
 
 
 class Board:
+    """Class for representing game board"""
     NOUGHT = 1
     CROSS = -1
     EMPTY = 0
@@ -32,11 +38,18 @@ class Board:
     WINNING_COMBINATIONS = generate_winning_combinations()
 
     def __init__(self):
+        """Constructor for class Board"""
         self.cells = [[0] * 3 for _ in range(3)]
         self.last_move = Board.NOUGHT
         self.number_of_moves = 0
 
     def make_move(self, cell):
+        """
+        Make move to a given cell
+
+        :param cell: tuple(int, int)
+        :return: bool
+        """
         if self.cells[cell[0]][cell[1]] != 0:
             return False
         self.last_move = -self.last_move
@@ -45,6 +58,11 @@ class Board:
         return True
 
     def has_winner(self):
+        """
+        Checks if there is a winner in game
+
+        :return: int
+        """
         for combination in self.WINNING_COMBINATIONS:
             lst = list()
             for cell in combination:
@@ -56,6 +74,11 @@ class Board:
         return Board.NOT_FINISHED
 
     def make_random_move(self):
+        """
+        Make random move to any free cell
+
+        :return: bool
+        """
         possible_moves = list()
         for i in range(3):
             for j in range(3):
@@ -68,6 +91,11 @@ class Board:
         return True
 
     def compute_score(self):
+        """
+        Chooses better move
+
+        :return: int
+        """
         has_winner = self.has_winner()
         if has_winner:
             winner_scores = {Board.NOUGHT_WINNER: 1,
@@ -90,5 +118,6 @@ class Board:
         return sum([x.name.compute_score() for x in boards])
 
     def __str__(self):
+        """String representation of game board"""
         decode = {0: " ", 1: "O", -1: "X"}
         return "\n".join(["|".join(map(lambda x: decode[x], row)) for row in self.cells])

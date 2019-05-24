@@ -3,10 +3,18 @@ from copy import deepcopy
 
 
 class Game:
+    """Class for representation of a Tic-Tac-Toe game"""
     def __init__(self):
+        """Constructor for class Game"""
         self.board = Board()
 
     def check_input(self, ui):
+        """
+        Checks user input for errors
+
+        :param ui: str
+        :return: bool
+        """
         try:
             ui = eval(ui)
             if not (isinstance(ui, tuple) or isinstance(ui, list)):
@@ -26,12 +34,23 @@ class Game:
             return 1
 
     def player_make_move(self, position):
+        """
+        Makes move for player
+
+        :param position: tuple(int, int)
+        :return: None
+        """
         if self.board.has_winner():
             return
         position = eval(position)
         self.board.make_move(position)
 
     def computer_make_move(self):
+        """
+        Makes move for AI
+
+        :return: None
+        """
         if self.board.has_winner():
             return
         possible_moves = list()
@@ -49,10 +68,21 @@ class Game:
 
     @staticmethod
     def get_winner(code):
+        """
+        Decodes winner
+
+        :param code: int
+        :return: str
+        """
         decoder = {1: 'AI won!', -1: 'User won!', 0: 'Draw.'}
         return decoder[code]
 
     def launch(self):
+        """
+        Launches main game loop
+
+        :return: None
+        """
         while not self.board.has_winner():
             pl = input('Enter move: ')
             if self.check_input(pl):
